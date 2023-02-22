@@ -7,7 +7,7 @@ source versions.sh
 JVM_VARIANT=client
 JVM_FEATURES=
 #JVM_VARIANT=minimal1
-#JVM_FEATURES=all-gcs,jvmti,services,vm-structs
+#JVM_FEATURES=jvmti,services,vm-structs,nmt,dtrace,management
 
 wget -nc https://github.com/openjdk/jdk17u/archive/refs/tags/${GIT_TAG}.tar.gz
 tar xzf ${GIT_TAG}.tar.gz
@@ -25,7 +25,7 @@ bash configure \
 	--with-version-patch=${JAVA_PATCH} \
 	--with-version-opt=${YEAR}-${VER} \
 	--disable-warnings-as-errors
-make JOBS=`nproc` LOG=cmdlines all legacy-jre-image
+make JOBS=`nproc` LOG=cmdlines all images
 pushd build/linux-arm-${JVM_VARIANT}-release/images
 tar czf jre_${VER}.tar.gz jre
 chown -R `id -u`:`id -g` jre_${VER}.tar.gz
